@@ -29,9 +29,10 @@ Multiclass Postoperative Glioma Segmentation on Longitudinal MRI* —
 
 ## Research Team
 
-This project was developed collaboratively by:
+This research project was collaboratively conducted by:
 
 - **[Atilla Mustafa](https://github.com/atilla-m)**
+- **[Elkhan Aghakishiyev](https://github.com/agakisiyev25)**
 - **[Jamila Jabrayilli](https://github.com/Jamajab)**
 
 ## Quick start (Windows, PowerShell)
