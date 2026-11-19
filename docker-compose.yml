@@ -1,0 +1,64 @@
+# CPU by default:
+#   docker compose up --build
+# With an NVIDIA GPU (needs the NVIDIA Container Toolkit):
+#   docker compose -f docker-compose.yml -f docker-compose.gpu.yml up --build
+#
+# Weights: put the model folder(s) in ./models, or set NNUNET_MODEL_DIR to a
+# host path before starting. With no weights the app runs in demo mode.
+# The app is then at http://localhost:8080
+#
+# First start: the backend log prints a one-time link for the first
+# administrator account (docker compose logs backend). Or create it with:
+#   docker compose exec backend python -m app.users invite --admin
+
+services:
+  backend:
+    build:
+      context: ./backend
+      args:
+        TORCH_INDEX: ${TORCH_INDEX:-https://download.pytorch.org/whl/cpu}
+        INSTALL_INFERENCE: ${INSTALL_INFERENCE:-1}
+        INSTALL_HDBET: ${INSTALL_HDBET:-0}
+    environment:
+      NNUNET_MODEL_DIR: /models
+      GLIOMA_DATA_DIR: /data
+      NNUNET_DEVICE: ${NNUNET_DEVICE:-auto}
+      NNUNET_DISABLE_TTA: ${NNUNET_DISABLE_TTA:-0}
+      TRAINING_ORIENTATION: ${TRAINING_ORIENTATION:-LPS}
+      JOB_TTL_HOURS: ${JOB_TTL_HOURS:-24}
+      # Accounts and limits (see README, "Accounts and security").
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8080}
+      PUBLIC_SAMPLES: ${PUBLIC_SAMPLES:-1}
+      COOKIE_SECURE: ${COOKIE_SECURE:-auto}
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-512}
+      MAX_ACTIVE_JOBS_PER_USER: ${MAX_ACTIVE_JOBS_PER_USER:-2}
+      MAX_JOBS_PER_USER_PER_DAY: ${MAX_JOBS_PER_USER_PER_DAY:-30}
+      # nginx in the frontend container is the only client; trust its X-Forwarded-* headers.
+      FORWARDED_ALLOW_IPS: "*"
+    volumes:
+      - ${NNUNET_MODEL_DIR:-./models}:/models:ro
+      # Jobs and the sample cases (with their finished results) live in backend/data.
+      - ./backend/data:/data
+    ports:
+      - "127.0.0.1:8000:8000"   # API only reachable on the server itself; visitors use port 8080
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "8080:8080"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+

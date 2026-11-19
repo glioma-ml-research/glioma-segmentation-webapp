@@ -1,0 +1,30 @@
+/* New account and comparison layouts use the ZIP's existing colour and type tokens. */
+:root { --field: var(--glass-2); --elevated: var(--bg-2); --accent: var(--cyan); --accent-soft: var(--cyan-soft); }
+.comparison-page { padding-top: var(--nav-space); padding-bottom: 80px; }
+.comparison-toolbar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 20px 0; }
+.comparison-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.comparison-visit { min-width: 0; overflow: hidden; }
+.comparison-visit > header { padding: 16px; display: flex; justify-content: space-between; gap: 12px; }
+.comparison-slice { display: flex; flex-direction: column; position: relative; height: clamp(280px, 40vw, 520px); background: #050608; }
+.comparison-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+.comparison-table th, .comparison-table td { padding: 12px; text-align: right; border-bottom: 1px solid var(--line); }
+.comparison-table th:first-child, .comparison-table td:first-child { text-align: left; }
+.comparison-note { color: var(--muted); margin: 16px 0; }
+.comparison-confirm { display: flex; gap: 10px; align-items: flex-start; margin: 20px 0; }
+.comparison-change { margin-top: 16px; }
+.comparison-change .comparison-slice { max-width: 700px; margin: auto; }
+.comparison-legend { display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; }
+.comparison-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.comparison-scroll { overflow-x: auto; }
+@media (max-width: 700px) {
+  .comparison-pair { grid-template-columns: 1fr; }
+  .comparison-toolbar .seg { flex-wrap: wrap; }
+  .comparison-table th, .comparison-table td { padding: 8px; font-size: 12px; }
+  .vbar-right { flex-wrap: wrap; }
+  .nav-links { gap: 12px; }
+}
+
+.comparison-slice .slice-index > .icon-button:last-child { display: none; }
+.vbar-right .timepoint-link { width: auto !important; padding: 0 12px !important; white-space: nowrap; }
+
+:root { --surface: var(--glass); --surface-2: var(--glass-2); --popover: var(--bg-2); }

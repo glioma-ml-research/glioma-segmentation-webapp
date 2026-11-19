@@ -1,0 +1,117 @@
+/*
+ * Adapting to the device and the person: notches and home indicators, touch
+ * targets, tablet and landscape layouts, and the system accessibility
+ * settings (reduced transparency, more contrast, forced colours).
+ */
+
+/* ------------------------------------------------- notches, home indicator */
+.container { padding-left: max(var(--gutter), env(safe-area-inset-left)); padding-right: max(var(--gutter), env(safe-area-inset-right)); }
+.nav { padding-top: env(safe-area-inset-top); height: calc(64px + env(safe-area-inset-top)); }
+.disclaimer-bar { padding-bottom: calc(8px + env(safe-area-inset-bottom)); padding-left: max(var(--gutter), env(safe-area-inset-left)); padding-right: max(var(--gutter), env(safe-area-inset-right)); }
+.vbar { padding-top: env(safe-area-inset-top); padding-left: max(14px, env(safe-area-inset-left)); padding-right: max(14px, env(safe-area-inset-right)); height: calc(60px + env(safe-area-inset-top)); }
+.vbody { padding-left: max(10px, env(safe-area-inset-left)); padding-right: max(10px, env(safe-area-inset-right)); }
+@media (max-width: 900px) {
+  .nav { height: calc(56px + env(safe-area-inset-top)); }
+  .nav-sheet { top: calc(56px + env(safe-area-inset-top)); }
+}
+
+/* ------------------------------------------------------ phone disclaimer */
+@media (max-width: 720px) {
+  .disclaimer-bar { display: flex; align-items: center; gap: 10px; text-align: left; }
+  .disclaimer-bar .dis-text { flex: 1; min-width: 0; }
+  .dis-long { display: none; }
+  .disclaimer-bar[data-more="true"] .dis-long { display: inline; }
+  .dis-more { display: inline-flex; align-items: center; min-height: 28px; }
+}
+
+/* ----------------------------------------------------------- touch input */
+/* At least 40 px for every control a finger uses (WCAG 2.5.8 asks 24, Apple 44 pt). */
+@media (pointer: coarse) {
+  .btn-sm { --h: 40px; }
+  .nav-link { padding: 11px 14px; }
+  .icon-button { width: 40px; height: 40px; }
+  .slice-title { height: 48px; }
+  .slice-index { gap: 0; }
+  .seg button { height: 36px; padding: 0 14px; }
+  .tab { height: 40px; }
+  .eye { width: 40px; height: 40px; }
+  .layer-row { grid-template-columns: 40px minmax(0, 1fr) auto; }
+  .layer-sub, .lesions { margin-left: 46px; }
+  .layer-name { min-height: 40px; }
+  .lesion-toggle { min-height: 36px; }
+  .lesions button { min-height: 36px; }
+  .scene-tools button { min-width: 38px; height: 38px; }
+  .scene-tools button.wide { padding: 0 12px; }
+  /* In a small 3D view the camera buttons sit in two columns, not one tall strip over the brain. */
+  .scene-tools.is-small:not([hidden]) { display: grid; grid-template-columns: repeat(2, 38px); border-radius: 16px; }
+  .scene-tools.is-small button.wide { grid-column: 1 / -1; }
+  .vbar-home { width: 44px; height: 44px; }
+  .seq-remove { width: 38px; height: 38px; right: 4px; bottom: 4px; }
+  .member-actions .btn-sm { height: 40px; }
+  .member-actions .btn-icon { width: 40px; }
+  .ctrl { padding: 8px 0; }
+  input[type="range"] { height: 32px; }
+  input[type="range"]::-webkit-slider-thumb { width: 22px; height: 22px; margin-top: -9.5px; }
+  input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; }
+  .switch-track { width: 42px; height: 26px; }
+  .switch-track::after { width: 20px; height: 20px; }
+  .switch input:checked + .switch-track::after { transform: translateX(16px); }
+  /* Hover-only affordances are always shown. */
+  .sample-open { background: var(--surface-2); }
+}
+
+/* -------------------------------------------- tablets in portrait: 2 x 2 */
+/* Wide enough for four views at once (iPad portrait is 768–834 px). */
+@media (min-width: 600px) and (max-width: 900px) {
+  .view-tabs.seg { display: none; }
+  .viewports, .viewports[data-layout="focus"] {
+    height: min(calc(100vw - 20px), 72svh);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+  .viewports .viewport, .viewports[data-layout="focus"] .viewport, .viewports[data-layout="focus"] .viewport.is-focus { display: flex; grid-column: auto; grid-row: auto; }
+  .viewports.has-max { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .viewports.has-max .viewport { display: none; }
+  .viewports.has-max .viewport.is-max { display: flex; grid-column: 1; grid-row: 1; }
+  .viewports .viewport .view-sub { display: none; }
+}
+
+/* ------------------------------------------------- phones held sideways */
+@media (orientation: landscape) and (max-height: 520px) {
+  .nav { height: calc(48px + env(safe-area-inset-top)); }
+  .nav-sheet { top: calc(48px + env(safe-area-inset-top)); }
+  .hero { min-height: 0; }
+  .hero-stage { height: 70svh; }
+  .viewports, .viewports[data-layout="focus"] { height: calc(100svh - 150px); min-height: 220px; }
+  .disclaimer-bar { padding-block: 4px calc(4px + env(safe-area-inset-bottom)); }
+  .auth-page { padding-top: calc(var(--nav-space) - 16px); }
+}
+
+/* ------------------------------------------- system accessibility settings */
+@media (prefers-reduced-transparency: reduce) {
+  .nav, .nav-sheet, .menu, .disclaimer-bar, .hover-tip, .scene-tools, .callouts li, .chip, .btn-secondary, .scene-note, .inspector {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .nav, .nav-sheet, .menu, .disclaimer-bar { background: var(--bg); }
+  .hover-tip, .scene-tools, .scene-note { background: #0e0f11; }
+}
+@media (prefers-contrast: more) {
+  :root {
+    --line: color-mix(in srgb, currentColor 22%, transparent);
+    --line-2: color-mix(in srgb, currentColor 34%, transparent);
+    --line-3: color-mix(in srgb, currentColor 50%, transparent);
+    --muted: var(--text-2);
+    --faint: var(--text-2);
+  }
+  .nav, .menu, .disclaimer-bar { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .input { border-color: var(--line-3); }
+}
+@media (forced-colors: active) {
+  .btn, .seg button, .tab, .input, .chip { border: 1px solid ButtonText; }
+  .swatch, .palette-dots i { forced-color-adjust: none; }
+  .art-ring, .art-scan { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Only opacity changes: the menu fades instead of growing. */
+  .menu, .menu[data-open="true"] { transform: none; }
+}
