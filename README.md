@@ -25,6 +25,20 @@ Multiclass Postoperative Glioma Segmentation on Longitudinal MRI* —
   research, and the decisions (dark reading-room UI, colour-blind-safe
   palette, touch and tablet layouts).
 
+## Research Team
+
+This project was developed collaboratively by:
+
+- **[Atilla Mustafa](https://github.com/atilla-m)**
+- **[Elkhan Aghakishiyev](https://github.com/agakisiyev25)**
+- **[Jamila Jabrayilli](https://github.com/Jamajab)**
+
+**Contribution Note:** The project's code and supporting materials were
+consolidated and uploaded to GitHub by Elkhan Aghakishiyev. As a result, the
+commit history primarily reflects a single GitHub account rather than the
+individual contributions of all three researchers. The project was developed
+collaboratively by the research team listed above.
+
 ## Quick start (Windows, PowerShell)
 
 Needs Python 3.11 and Node 20.
