@@ -4,6 +4,8 @@ Upload a patient's four MRI sequences, segment them with the nnU-Net v2
 `3d_fullres` pipeline from our study, and inspect the result on a 3D model of
 that patient's own brain and on 2D slices.
 
+**Live website:** [glioma-segmentation.codemasters.az](https://glioma-segmentation.codemasters.az/)
+
 > **Research prototype. Trained and internally validated on the MU-Glioma-Post
 > dataset only. Not a medical device, not for diagnosis or treatment
 > decisions.**
@@ -30,14 +32,7 @@ Multiclass Postoperative Glioma Segmentation on Longitudinal MRI* —
 This project was developed collaboratively by:
 
 - **[Atilla Mustafa](https://github.com/atilla-m)**
-- **[Elkhan Aghakishiyev](https://github.com/agakisiyev25)**
 - **[Jamila Jabrayilli](https://github.com/Jamajab)**
-
-**Contribution Note:** The project's code and supporting materials were
-consolidated and uploaded to GitHub by Elkhan Aghakishiyev. As a result, the
-commit history primarily reflects a single GitHub account rather than the
-individual contributions of all three researchers. The project was developed
-collaboratively by the research team listed above.
 
 ## Quick start (Windows, PowerShell)
 
